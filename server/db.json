@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "firstname": "Alan Musk",
+      "age": 63,
+      "companyId": "2",
+      "id": "tHKBJ7d"
+    },
+    {
+      "firstname": "John Denayer",
+      "age": 25,
+      "companyId": "1",
+      "id": "CsQtAFH"
+    }
+  ],
+  "companies": [
+    {
+      "id": "1",
+      "name": "Apple",
+      "description": "iphone"
+    },
+    {
+      "id": "2",
+      "name": "Google",
+      "description": "search"
+    }
+  ]
+}
