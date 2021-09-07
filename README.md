@@ -3,7 +3,7 @@
 Using Stack:
 
 
-Frontend: React(Hooks) and React Apollo Client
+Frontend:    React(Hooks) and React Apollo Client
 
 
-Backend: Node.js, Express, GraphQL and additional technology Json-Server.
+Backend:     Node.js, Express, GraphQL and additional technology Json-Server.
