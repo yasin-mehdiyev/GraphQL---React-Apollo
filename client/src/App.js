@@ -1,48 +1,59 @@
-import React from 'react';
-import { GET_USER } from './apollo/queries';
-import { useQuery } from '@apollo/client';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import React, { Suspense } from "react";
+
+// Components
+import Container from "./components/UI/Container";
+
+// Bootstrap
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+// React-Router-Dom
+import {
+  Switch,
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+} from "react-router-dom";
+
+// Includes Lazy Loadings (Code Splitting)
+const Home = React.lazy(() => import("./pages/Detail/DetailPage"));
+const Create = React.lazy(() => import("./pages/Create/CreatePage"));
+const Details = React.lazy(() => import("./pages/UserDetail/UserDetailPage"));
+const Update = React.lazy(() => import('./pages/Edit/EditPage'));
 
 const App = () => {
-
-  const { loading, error, data } = useQuery(GET_USER);
-
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
-
   return (
-    <div className="container">
-      <div className="d-flex justify-content-center align-items-center mt-3">
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">User</th>
-              <th scope="col">Age</th>
-              <th scope="col">Company Name</th>
-              <th scope="col">Company Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              data && data.users && (
+    <Container>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Router>
+          <Switch>
+            <Route path="/users" exact>
+              <Home />
+            </Route>
 
-                data.users.map((user, index) => (
-                  <tr key={index}>
-                    <th scope="row">{index + 1}</th>
-                    <td>{user.firstname}</td>
-                    <td>{user.age}</td>
-                    <td>{user.company.name}</td>
-                    <td>{user.company.description}</td>
-                  </tr>
-                ))
-              )
-            }
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )
-}
+            <Route path="/users/new">
+              <Create />
+            </Route>
 
-export default App
+            <Route path="/users/edit" exact>
+              <Redirect to="/users" />
+            </Route>
+
+            <Route path="/users/edit/:id">
+              <Update />
+            </Route>
+
+            <Route path="/users/:id">
+              <Details />
+            </Route>
+
+            <Route path="/" exact>
+              <Redirect to="/users" />
+            </Route>
+          </Switch>
+        </Router>
+      </Suspense>
+    </Container>
+  );
+};
+
+export default App;

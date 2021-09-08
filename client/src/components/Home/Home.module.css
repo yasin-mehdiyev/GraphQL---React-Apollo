@@ -1,0 +1,20 @@
+.actions {
+  display: flex;
+}
+
+.actions div {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.actions div:nth-child(1) {
+  color: #2727e4;
+}
+
+.actions div:nth-child(2) {
+  color: rgb(6, 177, 97);
+}
+
+.actions div:nth-child(3) {
+  color: rgb(241, 46, 46);
+}
