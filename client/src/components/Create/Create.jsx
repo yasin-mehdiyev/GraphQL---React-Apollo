@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { CREATE_USER, GET_COMPANIES, GET_USER } from "../../apollo/queries";
+import { toast } from 'react-toastify';
 
 const Create = () => {
   //   Using State
@@ -32,7 +33,6 @@ const Create = () => {
     ev.preventDefault();
 
     if (datas.firstname !== "" && datas.age !== "" && datas.companyId !== "") {
-
       createUser({
         variables: {
           firstname: datas.firstname,
@@ -42,6 +42,8 @@ const Create = () => {
         refetchQueries: [{ query: GET_USER }]
       }).then(()=>history.push('/users'));
 
+      toast.success('Successfully created new user');
+
       setDatas({
         firstname: "",
         age: "",
@@ -50,7 +52,7 @@ const Create = () => {
 
     }
     else{
-        console.log('Any data is empty...')
+        toast.warning('Any data is empty...');
     }
   };
 
@@ -72,7 +74,6 @@ const Create = () => {
               value={datas.firstname}
               placeholder="Enter Firstname"
               onChange={(e) => onChangeHandler(e.target.name, e.target.value)}
-              required
             />
           </div>
 
@@ -88,7 +89,6 @@ const Create = () => {
               value={datas.age}
               placeholder="Enter Age"
               onChange={(e) => onChangeHandler(e.target.name, e.target.value)}
-              required
             />
           </div>
 
@@ -109,7 +109,7 @@ const Create = () => {
             </select>
           </div>
 
-          <button type="submit" className="btn btn-primary w-100 mt-3">
+          <button type="submit" className="btn btn-primary w-100 mt-3 text-uppercase">
             Create
           </button>
         </form>

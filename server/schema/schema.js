@@ -97,7 +97,7 @@ const mutation = new GraphQLObjectType({
       args: {
         firstname: { type: new GraphQLNonNull(GraphQLString) },
         age: { type: new GraphQLNonNull(GraphQLInt) },
-        companyId: { type: GraphQLString },
+        companyId: { type: GraphQLNonNull(GraphQLString) },
       },
       resolve(parentVal, { firstname, age, companyId }) {
         return axios
@@ -122,7 +122,7 @@ const mutation = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(GraphQLString) },
         firstname: { type: GraphQLString },
         age: { type: GraphQLInt },
-        company: { type: GraphQLString },
+        companyId: { type: GraphQLString },
       },
       resolve(parentVal, args) {
         return axios

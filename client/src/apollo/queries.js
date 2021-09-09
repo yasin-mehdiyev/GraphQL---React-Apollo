@@ -54,6 +54,21 @@ export const CREATE_USER = gql`
   }
 `;
 
+// PATCH Queries
+
+export const UPDATE_USER = gql`
+  mutation EditUser($id:String!,$firstname:String!,$age:Int!,$companyId:String!){
+    editUser(id:$id,firstname:$firstname,age:$age,companyId:$companyId){
+      id,
+      firstname,
+      age,
+      company{
+        id
+      }
+    }
+  }
+`;
+
 // DELETE Queries
 
 export const DELETE_USER = gql`

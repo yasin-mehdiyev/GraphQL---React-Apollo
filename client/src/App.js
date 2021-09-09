@@ -14,6 +14,10 @@ import {
   Redirect,
 } from "react-router-dom";
 
+// React Toastify
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 // Includes Lazy Loadings (Code Splitting)
 const Home = React.lazy(() => import("./pages/Detail/DetailPage"));
 const Create = React.lazy(() => import("./pages/Create/CreatePage"));
@@ -24,7 +28,11 @@ const App = () => {
   return (
     <Container>
       <Suspense fallback={<div>Loading...</div>}>
+
+        <ToastContainer autoClose={2000} position="bottom-right" />
+
         <Router>
+
           <Switch>
             <Route path="/users" exact>
               <Home />
