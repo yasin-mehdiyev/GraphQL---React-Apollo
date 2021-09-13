@@ -11,39 +11,56 @@ import { AiFillEdit, AiFillDelete, AiFillEye } from "react-icons/ai";
 import classes from "./Home.module.css";
 import { Link } from "react-router-dom";
 
-const Home = () => {
+// Export to Excel File
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
-// Using Mutation and Queries
+const Home = () => {
+  // Using Mutation and Queries
   const { loading, error, data } = useQuery(GET_USER);
-  const [ deleteUser, deletedUser ] = useMutation(DELETE_USER);
+  const [deleteUser, deletedUser] = useMutation(DELETE_USER);
 
   if (loading || deletedUser.loading) return "Loading...";
   if (error || deletedUser.error) return `Error! ${error.message}`;
 
-// Removing click event
+  // Removing click event
   const onRemoveHandler = (userId) => {
-      deleteUser({
-          variables: {
-              id: userId
-          },
-          refetchQueries: [{
-              query: GET_USER
-          }]
-      })
-  }
+    deleteUser({
+      variables: {
+        id: userId,
+      },
+      refetchQueries: [
+        {
+          query: GET_USER,
+        },
+      ],
+    });
+  };
 
   return (
     <React.Fragment>
       <h2 className="text-center mt-3">User List</h2>
 
-      <div className="d-flex justify-content-end">
+      <div className="d-flex justify-content-between">
+        <div className="d-flex">
+          <div style={{ marginRight: "10px" }}>
+            <button className="btn btn-primary">Filter</button>
+          </div>
+
+          <ReactHTMLTableToExcel
+            className="btn btn-info mr-3"
+            table="table-to-xls"
+            filename="tablexls"
+            sheet="Sheet"
+            buttonText="Export to Excel"
+          />
+        </div>
         <Link to="/users/new">
           <button className="btn btn-primary">Create New User</button>
         </Link>
       </div>
 
       <div className="d-flex justify-content-center align-items-center mt-3">
-        <table className="table">
+        <table className="table" id="table-to-xls">
           <thead className="thead-light">
             <tr>
               <th scope="col">#</th>
@@ -51,7 +68,7 @@ const Home = () => {
               <th scope="col">Age</th>
               <th scope="col">Company Name</th>
               <th scope="col">Company Description</th>
-              <th scope="col">Actions</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
